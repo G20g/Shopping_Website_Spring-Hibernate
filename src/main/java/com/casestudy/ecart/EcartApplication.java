@@ -13,5 +13,4 @@ public class EcartApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EcartApplication.class, args);
 	}
-
 }

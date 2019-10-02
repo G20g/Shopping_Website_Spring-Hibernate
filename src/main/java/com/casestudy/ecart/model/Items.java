@@ -29,17 +29,17 @@ public class Items implements Serializable {
     private String name;
     @NotBlank(message = "Please enter the brand name!")
     private String brand;
+    @NotBlank(message = "Please enter the URL of image!")
+    private String imgsrc;
     @NotBlank(message = "Please enter the description!")
     private String description;
     @Column(name = "unit_price")
     @Min(value = 1, message="Please select at least one value!")
     private double unitPrice;
     private int quantity;
-    @Column(name = "category_id")
-    @JsonIgnore
-    private int categoryId;
+    @Column(name = "Category")
+    private String category;
     @Column(name = "supplier_id")
-    @JsonIgnore
     private int supplierId;
 
 
@@ -94,27 +94,22 @@ public class Items implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public int getCategoryId() {
-        return categoryId;
-    }
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
+    public String getCategory() {return category;}
+    public void setCategory(String category) {this.category = category;}
     public int getSupplierId() {
         return supplierId;
     }
     public void setSupplierId(int supplierId) {
         this.supplierId = supplierId;
     }
-
-
-
+    public String getImgsrc() {return imgsrc;}
+    public void setImgsrc(String imgsrc) {this.imgsrc = imgsrc;}
 
     // toString for debugging
     @Override
     public String toString() {
         return "Product [id=" + id + ", code=" + code + ", name=" + name + ", brand=" + brand + ", description="
-                + description + ", unitPrice=" + unitPrice + ", quantity=" + quantity + ", categoryId=" + categoryId + ", supplierId=" + supplierId + ", views="
+                + description + ", imgsrc=" + imgsrc + ", unitPrice=" + unitPrice + ", quantity=" + quantity + ", category=" + category + ", supplierId=" + supplierId + ", views="
                 + "]";
     }
 }
