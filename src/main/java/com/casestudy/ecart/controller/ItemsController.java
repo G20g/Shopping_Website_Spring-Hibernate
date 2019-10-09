@@ -32,9 +32,23 @@ public class ItemsController {
         return itemsRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
     }
-    @GetMapping("/items/{category}")
-    public Items getProductByCategory(@PathVariable(value = "category") String productCategory) {
-        return itemsRepository.findAllByCategory(productCategory)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productCategory));
+    @GetMapping("/category/{type}")
+    public List<Items> getProductByCategory(@PathVariable(value = "type") String productCategory) {
+        return itemsRepository.findAllByCategory(productCategory);
+    }
+
+    @GetMapping("/{cat}/{c1}/{c2}")
+    public List<Items> getCategoryWithPrice(@PathVariable(value = "cat") String cat, @PathVariable(value = "c1") Double c1, @PathVariable(value = "c2") Double c2){
+        return itemsRepository.findAllByCategoryAndUnitPriceBetween(cat,c1,c2);
+    }
+
+    @GetMapping("/{c1}/{c2}")
+    public  List<Items> getWithPrice(@PathVariable(value = "c1") Double c1, @PathVariable(value = "c2") Double c2) {
+        return itemsRepository.findAllByUnitPriceBetween(c1, c2);
+    }
+
+    @GetMapping("/{b}")
+    public List<Items> getWithBrand(@PathVariable(value = "b") String b) {
+        return itemsRepository.findAllByBrand(b);
     }
 }
