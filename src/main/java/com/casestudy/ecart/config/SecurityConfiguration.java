@@ -44,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/{cat}/{c1}/{c2}").permitAll()
                 .antMatchers("/api/{c1}/{c2}").permitAll()
                 .antMatchers("/api/{b}").permitAll()
+                .antMatchers("/api/{cat}/{b}").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic();
         http.cors();

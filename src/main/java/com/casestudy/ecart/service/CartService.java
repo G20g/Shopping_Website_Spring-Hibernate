@@ -2,15 +2,17 @@ package com.casestudy.ecart.service;
 
 import com.casestudy.ecart.model.Cart;
 import com.casestudy.ecart.model.Items;
+import com.casestudy.ecart.model.Orders;
 import com.casestudy.ecart.model.Users;
 import com.casestudy.ecart.repository.*;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +24,10 @@ public class CartService {
     CartRepository cartRepository;
     @Autowired
     ItemsRepositoryClass itemsRepositoryClass;
+    @Autowired
+    OrdersRepository ordersRepository;
+    @Autowired
+    UsersRepository usersRepository;
 
     private ArrayList<Cart> getCartFromCurrentuser(Principal principal) {
         Optional<Users> users = usersRepositoryClass.getByUsername(principal.getName());
@@ -102,5 +108,24 @@ public class CartService {
             }
         }
         return "\"Unsuccessful\"";
+    }
+
+    public List<Orders> checkOut(Principal principal) {
+        Optional<Users> users = usersRepositoryClass.getByUsername(principal.getName());
+        ArrayList<Cart> cartList = cartRepository.findAllByUsers(users);
+
+        for (int i=0;i<cartList.size();i++) {
+            Cart cartObject = cartList.get(i);
+            Orders orders = new Orders();
+
+            orders.setUserId(cartObject.getUsers().getId());
+            orders.setQuantity(cartObject.getQuantity());
+            orders.setPrice(cartObject.getItems().getUnitPrice());
+            orders.setItemName(cartObject.getItems().getName());
+            orders.setDate(new Date());
+            cartRepository.delete(cartObject);
+            ordersRepository.saveAndFlush(orders);
+        }
+        return ordersRepository.findAllByUserId(users.get().getId());
     }
 }

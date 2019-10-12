@@ -49,6 +49,11 @@ public class ItemsController {
 
     @GetMapping("/{b}")
     public List<Items> getWithBrand(@PathVariable(value = "b") String b) {
-        return itemsRepository.findAllByBrand(b);
+        return itemsRepository.findAllByBrandContaining(b);
+    }
+
+    @GetMapping("/{cat}/{b}")
+    public List<Items> getCategoryWithBrand(@PathVariable(value = "cat") String cat, @PathVariable(value = "b") String b) {
+        return itemsRepository.findAllByCategoryAndBrandContaining(cat, b);
     }
 }
