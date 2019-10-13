@@ -101,10 +101,16 @@ public class CartService {
             Cart cartObject = cart.get(i);
 
             if(cartObject.getItems()==items.get()){
-                cartObject.setQuantity(cartObject.getQuantity()-value);
-                cartRepository.save(cartObject);
-
-                return "\"Successful\"";
+                int x = cartObject.getQuantity()-value;
+                if(x==1) {
+                    cartObject.setQuantity(1);
+                    cartRepository.save(cartObject);
+                    return "\"Successful\"";
+                }else if (x>1) {
+                    cartObject.setQuantity(x);
+                    cartRepository.save(cartObject);
+                    return "\"Successful\"";
+                }
             }
         }
         return "\"Unsuccessful\"";

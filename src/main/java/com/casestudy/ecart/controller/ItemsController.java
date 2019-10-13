@@ -52,7 +52,7 @@ public class ItemsController {
         return itemsRepository.findAllByBrandContaining(b);
     }
 
-    @GetMapping("/{cat}/{b}")
+    @GetMapping("/category/brand/{cat}/{b}")
     public List<Items> getCategoryWithBrand(@PathVariable(value = "cat") String cat, @PathVariable(value = "b") String b) {
         return itemsRepository.findAllByCategoryAndBrandContaining(cat, b);
     }
