@@ -134,4 +134,22 @@ public class CartService {
         }
         return ordersRepository.findAllByUserId(users.get().getId());
     }
+
+    public List<Orders> orderhist(Principal principal) {
+        Optional<Users> users = usersRepositoryClass.getByUsername(principal.getName());
+        ArrayList<Cart> cartList = cartRepository.findAllByUsers(users);
+
+        for (int i=0;i<cartList.size();i++) {
+            Cart cartObject = cartList.get(i);
+            Orders orders = new Orders();
+
+            orders.setUserId(cartObject.getUsers().getId());
+            orders.setQuantity(cartObject.getQuantity());
+            orders.setPrice(cartObject.getItems().getUnitPrice());
+            orders.setItemName(cartObject.getItems().getName());
+            orders.setDate(new Date());
+            ordersRepository.saveAndFlush(orders);
+        }
+        return ordersRepository.findAllByUserId(users.get().getId());
+    }
 }

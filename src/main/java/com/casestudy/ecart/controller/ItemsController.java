@@ -56,4 +56,10 @@ public class ItemsController {
     public List<Items> getCategoryWithBrand(@PathVariable(value = "cat") String cat, @PathVariable(value = "b") String b) {
         return itemsRepository.findAllByCategoryAndBrandContaining(cat, b);
     }
+
+    @GetMapping("/search/{name}")
+    public List<Items> getSearch(@PathVariable(value = "name")String name)
+    {
+        return itemsRepository.findByName(name);
+    }
 }

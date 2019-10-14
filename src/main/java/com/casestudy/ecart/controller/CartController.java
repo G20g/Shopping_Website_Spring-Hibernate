@@ -50,4 +50,10 @@ public class CartController {
         return cartService.checkOut(principal);
     }
 
+    @GetMapping(value = "/orderhist", produces = "application/json")
+    public List<Orders> ohhist(Principal principal) {
+
+        return cartService.orderhist(principal);
+    }
+
 }

@@ -2,28 +2,36 @@ package com.casestudy.ecart.model;
 
 import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 @Component
 @Entity
-@Table(name = "Users")
-public class Users {
-
-    public Users() {
-    }
-
+public class Users implements Serializable {
+    //private fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "username")
     private String username;
-    @NotBlank(message = "Please enter password!")
     private String password;
-    @Column(name = "active")
     private int active;
-    @Column(name = "authorize")
     private String authorize;
+    private String name;
+    private String phone;
+    private String gender;
+
+    public Users() { }
+
+    //getters and setters
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -36,42 +44,51 @@ public class Users {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
     public int getActive() {
         return active;
     }
-
     public void setActive(int active) {
         this.active = active;
     }
-
     public String getAuthorize() {
         return authorize;
     }
-
     public void setAuthorize(String authorize) {
         this.authorize = authorize;
     }
-
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override
     public String toString() {
         return "Users{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", active=" + active +
-                ", authorize=" + authorize +
+                ", authorize='" + authorize + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender='" + gender + '\'' +
                 '}';
     }
 }

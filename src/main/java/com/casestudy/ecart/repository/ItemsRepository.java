@@ -13,5 +13,6 @@ public interface ItemsRepository extends JpaRepository<Items,Integer> {
     public List<Items> findAllByUnitPriceBetween(Double c1,Double c2);
     public List<Items> findAllByBrandContaining(String b);
     public List<Items> findAllByCategoryAndBrandContaining(String cat,String b);
+    public List<Items> findByName(String n);
 }
 
