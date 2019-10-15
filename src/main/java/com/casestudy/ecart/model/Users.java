@@ -22,6 +22,8 @@ public class Users implements Serializable {
     private String name;
     private String phone;
     private String gender;
+    private String address;
+    private String email;
 
     public Users() { }
 
@@ -78,6 +80,22 @@ public class Users implements Serializable {
         this.gender = gender;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Users{" +
@@ -89,6 +107,8 @@ public class Users implements Serializable {
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", gender='" + gender + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
