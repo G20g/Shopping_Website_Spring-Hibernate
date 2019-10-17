@@ -2,6 +2,7 @@ package com.casestudy.ecart.controller;
 
 import com.casestudy.ecart.model.Items;
 import com.casestudy.ecart.repository.ItemsRepository;
+import com.casestudy.ecart.service.CurrentUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ public class ItemsController {
 
     @Autowired
     ItemsRepository itemsRepository;
+    @Autowired
+    CurrentUserService currentUserService;
 
     @GetMapping("/items")
     public List<Items> getAllItems() {
@@ -23,27 +26,28 @@ public class ItemsController {
     }
 
     @PostMapping("/additems")
-        public Items addproduct(@Valid @RequestBody Items items) {
-            return itemsRepository.save(items);
-        }
+    public Items addproduct(@Valid @RequestBody Items items) {
+        return itemsRepository.save(items);
+    }
 
     @GetMapping("/items/{id}")
     public Items getProductById(@PathVariable(value = "id") Integer productId) {
         return itemsRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
     }
+
     @GetMapping("/category/{type}")
     public List<Items> getProductByCategory(@PathVariable(value = "type") String productCategory) {
         return itemsRepository.findAllByCategory(productCategory);
     }
 
     @GetMapping("/{cat}/{c1}/{c2}")
-    public List<Items> getCategoryWithPrice(@PathVariable(value = "cat") String cat, @PathVariable(value = "c1") Double c1, @PathVariable(value = "c2") Double c2){
-        return itemsRepository.findAllByCategoryAndUnitPriceBetween(cat,c1,c2);
+    public List<Items> getCategoryWithPrice(@PathVariable(value = "cat") String cat, @PathVariable(value = "c1") Double c1, @PathVariable(value = "c2") Double c2) {
+        return itemsRepository.findAllByCategoryAndUnitPriceBetween(cat, c1, c2);
     }
 
     @GetMapping("/{c1}/{c2}")
-    public  List<Items> getWithPrice(@PathVariable(value = "c1") Double c1, @PathVariable(value = "c2") Double c2) {
+    public List<Items> getWithPrice(@PathVariable(value = "c1") Double c1, @PathVariable(value = "c2") Double c2) {
         return itemsRepository.findAllByUnitPriceBetween(c1, c2);
     }
 
@@ -58,8 +62,14 @@ public class ItemsController {
     }
 
     @GetMapping("/search/{name}")
-    public List<Items> getSearch(@PathVariable(value = "name")String name)
+    public List<Items> getSearch(@PathVariable(value = "name") String name)
+
     {
         return itemsRepository.findByName(name);
+    }
+
+    @PutMapping("/edit-product")
+    public Items edit(@RequestBody Items items, @RequestParam("id") int id) {
+        return currentUserService.editProduct(items,id);
     }
 }
