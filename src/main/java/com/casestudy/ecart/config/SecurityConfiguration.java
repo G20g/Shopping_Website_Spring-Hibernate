@@ -38,13 +38,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .antMatchers("/users/addUsers").permitAll()
-                .antMatchers("/api/items").permitAll()
+                .antMatchers("/users/getUsers").permitAll()
+                /*.antMatchers("/api/items").permitAll()
                 .antMatchers("/api/items/{id}").permitAll()
                 .antMatchers("/api/category/{type}").permitAll()
                 .antMatchers("/api/{cat}/{c1}/{c2}").permitAll()
                 .antMatchers("/api/{c1}/{c2}").permitAll()
                 .antMatchers("/api/{b}").permitAll()
-                .antMatchers("/api/{cat}/{b}").permitAll()
+                .antMatchers("/api/{cat}/{b}").permitAll()*/
                 .anyRequest().authenticated()
                 .and().httpBasic();
         http.cors();

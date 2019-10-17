@@ -65,7 +65,7 @@ public class ItemsController {
     public List<Items> getSearch(@PathVariable(value = "name") String name)
 
     {
-        return itemsRepository.findByName(name);
+        return itemsRepository.findByNameContains(name);
     }
 
     @PutMapping("/edit-product")
